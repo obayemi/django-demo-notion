@@ -20,7 +20,11 @@ class Document(
     )
 
     namespace = models.ForeignKey(
-        "Namespace", on_delete=models.CASCADE, related_name="documents"
+        "Namespace",
+        on_delete=models.CASCADE,
+        related_name="documents",
+        null=True,
+        blank=True,
     )
 
     title = models.CharField(max_length=255, db_index=True)

@@ -13,6 +13,26 @@ class UserManager(BaseUserManager):
     def get_queryset(self):
         return QuerySet(self.model, using=self._db)
 
+    def create_user(self, email, username, password=None):
+        if not email:
+            raise ValueError("Users must provide an email to create an account")
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        user = self.create_user(
+            email=self.normalize_email(email), username="", password=password
+        )
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
 
 class User(
     PermissionMixinBuilder(filter_func=filter_permission),

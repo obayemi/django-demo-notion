@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-djangoba-tools = { path = "../djangoba-tools" }
+djangoba-tools = { git = "https://github.com/obayemi/djangoba-tools.git" }
 
 [dependency-groups]
 dev = ["ipython>=8.29.0", "ruff>=0.8.0"]

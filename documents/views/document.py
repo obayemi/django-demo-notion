@@ -22,7 +22,15 @@ class DocumentFilter(filters.FilterSet):
 
 class DocumentSerializer(ModelSerializer):
     class Meta:
-        fields = ("id", "title", "content", "created_by", "account", "namespace")
+        fields = (
+            "id",
+            "created",
+            "title",
+            "content",
+            "created_by",
+            "account",
+            "namespace",
+        )
         model = Document
 
 
@@ -42,12 +50,14 @@ class FullDocumentSerializer(ModelSerializer):
 
 class DocumentViewset(ModelViewSet):
     queryset = Document.objects.all()
+    filter_class = DocumentFilter
     search_fields = [
         "@title",
         "@created_by__email",
         "@content",
         "@comments__content",
     ]
+    ordering_fields = ["title", "created"]
 
     def get_serializer_class(self):
         match self.action:
